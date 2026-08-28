@@ -11,10 +11,7 @@ class Solution {
             } else {
                 right = mid - 1;
             }
-            // System.out.println(left);
-            // System.out.println(right);
         }
-        System.out.println(right);
         
         return k + right + 1;
     }
