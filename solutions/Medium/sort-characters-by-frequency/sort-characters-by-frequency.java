@@ -17,15 +17,8 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
         }
-        for (int i = 0; i < s.length(); i++) {
-            Character ch = s.charAt(i);
-            if (map.get(ch) > 0) {
-                Pair pair = new Pair(ch, map.get(ch));
-                // System.out.println(pair.ch);
-                // System.out.println(pair.freq);
-                maxHeap.offer(pair);
-                map.put(ch, -1);
-            }
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            maxHeap.offer(new Pair(entry.getKey(), entry.getValue()));
         }
 
         while (!maxHeap.isEmpty()) {
