@@ -1,0 +1,34 @@
+# Generate Parentheses
+
+![Difficulty](https://img.shields.io/badge/Difficulty-Medium-ffb800?style=flat-square)
+
+**LeetCode Link:** [Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
+
+---
+
+## Problem Description
+
+_Source: LeetCode_
+
+Given `n` pairs of parentheses, write a function to *generate all combinations of well-formed parentheses*.
+
+**Example 1:**
+
+```text
+**Input:** n = 3
+**Output:** ["((()))","(()())","(())()","()(())","()()()"]
+
+```
+
+**Example 2:**
+
+```text
+**Input:** n = 1
+**Output:** ["()"]
+
+```
+
+**Constraints:**
+
+- `1 <= n <= 8`
+
