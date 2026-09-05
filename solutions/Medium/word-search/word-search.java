@@ -4,19 +4,29 @@ class Solution {
             return true;
         }
 
-        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != word.charAt(index)) {
+        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length
+                || board[row][col] != word.charAt(index)) {
             return false;
         }
 
         char temp = board[row][col];
         board[row][col] = '#';
 
-        boolean found = dfs(board, word, row + 1, col, index + 1) || dfs(board, word, row - 1, col, index + 1) || dfs(board, word, row, col + 1, index + 1) || dfs(board, word, row, col - 1, index + 1);
+        int[][] directions = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+        boolean found = false;
+
+        for (int[] dir : directions) {
+            if (dfs(board, word, row + dir[0], col + dir[1], index + 1)) {
+                found = true;
+                break;
+            }
+        }
 
         board[row][col] = temp;
 
         return found;
     }
+
     public boolean exist(char[][] board, String word) {
         int rows = board.length;
         int cols = board[0].length;
@@ -27,7 +37,7 @@ class Solution {
                     return true;
                 }
             }
-        } 
-        return false; 
+        }
+        return false;
     }
 }
