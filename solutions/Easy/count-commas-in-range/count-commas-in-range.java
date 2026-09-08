@@ -3,10 +3,6 @@ class Solution {
         if (n < 1000) {
             return 0;
         }
-        int sum = 0;
-        for (int i = 1000; i <= n; i++) {
-            sum++;
-        }
-        return sum;
+        return n - 1000 + 1;
     }
 }
