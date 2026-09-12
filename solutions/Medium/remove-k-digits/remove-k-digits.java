@@ -3,7 +3,7 @@ class Solution {
         int n = num.length();
         Deque<Character> stack = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
-            while (!stack.isEmpty() && k > 0 && (num.charAt(i)) < (stack.peek())) {
+            while (!stack.isEmpty() && k > 0 && num.charAt(i) < stack.peek()) {
                 stack.pop();
                 k--;
             }
