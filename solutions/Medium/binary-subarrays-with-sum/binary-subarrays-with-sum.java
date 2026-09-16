@@ -1,23 +1,23 @@
 class Solution {
-    public int numSubarraysWithSum(int[] nums, int goal) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(0,1);
-
-        int prefixSum = 0;
-        int count = 0;
-        
-        for(int i = 0; i < nums.length; i++){
-            prefixSum += nums[i];
-            int num = prefixSum - goal;
-
-            if(map.containsKey(num)){
-                count += map.get(num);
-                
-            }
-
-            map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
-
+    public int atmostSum(int[] arr, int goal) {
+        if (goal == -1) {
+            return 0;
         }
-        return count;
+        int sum = 0;
+        int left = 0;
+        int ans = 0;
+        for(int right = 0; right < arr.length; right++) {
+            sum += arr[right];
+
+            while (sum > goal) {
+                sum -= arr[left];
+                left++;
+            }
+            ans += right - left + 1;
+        }
+        return ans;
+    }
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return atmostSum(nums, goal) - atmostSum(nums, goal - 1);
     }
 }
