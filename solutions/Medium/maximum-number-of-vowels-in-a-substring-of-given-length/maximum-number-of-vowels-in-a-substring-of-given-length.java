@@ -8,28 +8,26 @@ class Solution {
         }
         return false;
     }
-
     public int maxVowels(String s, int k) {
         int left = 0;
-        int ans = 0;
-        int n = s.length();
-        for (int i = 0; i < k; i++) {
-            if (isVow(s.charAt(i))) {
-                ans++;
-            }
-        }
-        int vowCnt = ans;
-        for (int right = k; right < n; right++) {
-            if (isVow(s.charAt(right))) {
-                vowCnt++;
-            }
-            if (isVow(s.charAt(left))) {
-                vowCnt--;
-            }
+        int right = 0;
+        int count = 0;
+        int maxCount = 0;
 
-        ans = Math.max(ans, vowCnt);  
-        left++;
+        while (right < s.length()) {
+            char ch = s.charAt(right);
+            if (isVow(ch)) {
+                count++;
+            }
+            while (right - left + 1> k) {
+                if (isVow(s.charAt(left))) {
+                    count--;
+                }
+                left++;
+            }
+            maxCount = Math.max(maxCount, count);
+            right++;
+        }
+        return maxCount;
     }
-    return ans;
-}
 }
