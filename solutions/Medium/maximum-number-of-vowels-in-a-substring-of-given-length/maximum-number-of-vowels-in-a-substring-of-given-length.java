@@ -1,12 +1,7 @@
 class Solution {
     public boolean isVow(char ch) {
-        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
-        for (char c : vowels) {
-            if (ch == c) {
-                return true;
-            }
-        }
-        return false;
+        return ch == 'a' || ch == 'e' || ch == 'i' ||
+               ch == 'o' || ch == 'u';
     }
     public int maxVowels(String s, int k) {
         int left = 0;
