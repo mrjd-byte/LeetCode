@@ -2,47 +2,43 @@ class Solution {
     public int orangesRotting(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        int[][] visited = grid;
-        Queue<int[]> q = new LinkedList<>();
-        int countFreshOrange = 0;
+        Queue<int[]> queue = new LinkedList<>();
+        int freshOranges = 0;
+        int minutes = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (visited[i][j] == 2) {
-                    q.offer(new int[] {i, j});
-                }
-                if (visited[i][j] == 1) {
-                    countFreshOrange++;
+                if (grid[i][j] == 2) {
+                    queue.offer(new int[] { i, j });
+                } else if (grid[i][j] == 1) {
+                    freshOranges++;
                 }
             }
         }
-        if (countFreshOrange == 0)
-            return 0;
-        if (q.isEmpty())
-            return -1;
-        
-        int minutes = -1;
-        int[][] dirs = {{1, 0},{-1, 0},{0, -1},{0, 1}};
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
-                int[] cell = q.poll();
-                int x = cell[0];
-                int y = cell[1];
-                for (int[] dir : dirs) {
-                    int i = x + dir[0];
-                    int j = y + dir[1];
-                    if (i >= 0 && i < m && j >= 0 && j < n && visited[i][j] == 1) {
-                        visited[i][j] = 2;
-                        countFreshOrange--;
-                        q.offer(new int[] {i, j});
+        int[] dRow = { -1, 1, 0, 0 };
+        int[] dCol = { 0, 0, -1, 1 };
+
+        while (!queue.isEmpty() && freshOranges > 0) {
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                int[] cell = queue.poll();
+                int row = cell[0];
+                int col = cell[1];
+                for (int dir = 0; dir < 4; dir++) {
+                    int nextRow = row + dRow[dir];
+                    int nextCol = col + dCol[dir];
+
+                    if (nextRow >= 0 && nextRow < m && nextCol >= 0 && nextCol < n && grid[nextRow][nextCol] == 1) {
+                        grid[nextRow][nextCol] = 2;
+                        freshOranges--;
+                        queue.offer(new int[] { nextRow, nextCol });
                     }
                 }
             }
             minutes++;
         }
-        
-        if (countFreshOrange == 0)
-            return minutes;
-        return -1;
+        if (freshOranges > 0) {
+            return -1;
+        }
+        return minutes;
     }
 }
