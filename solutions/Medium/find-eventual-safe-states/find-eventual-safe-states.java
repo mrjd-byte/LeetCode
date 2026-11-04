@@ -1,51 +1,43 @@
 class Solution {
-    private boolean dfs(int node, int[] visited, int[] pathVisited,
-        int[] safe, int[][] graph) {
-        visited[node] = 1;
-        pathVisited[node] = 1;
-
-        for (int neighbor : graph[node]) {
-            if (visited[neighbor] == 0) {
-                if (!dfs(neighbor, visited, pathVisited, safe, graph)) {
-                    return false;
-                }
-            }
-
-            else if (pathVisited[neighbor] == 1) {
-                return false;
-            }
-
-            else if (safe[neighbor] == 0) {
-                return false;
-            }
-        }
-
-        pathVisited[node] = 0;
-
-        safe[node] = 1;
-        return true;
-    }
-
     public List<Integer> eventualSafeNodes(int[][] graph) {
         int vertices = graph.length;
-
-        int[] visited = new int[vertices];
-        int[] pathVisited = new int[vertices];
-        int[] safe = new int[vertices];
+        ArrayList<ArrayList<Integer>> reverseGraph = new ArrayList<>();
+        int[] outdegree = new int[vertices];
 
         for (int node = 0; node < vertices; node++) {
-            if (visited[node] == 0) {
-                dfs(node, visited, pathVisited, safe, graph);
+            reverseGraph.add(new ArrayList<>());
+        }
+
+        for (int node = 0; node < vertices; node++) {
+            outdegree[node] = graph[node].length;
+            for (int neighbor : graph[node]) {
+                reverseGraph.get(neighbor).add(node);
             }
         }
 
-        List<Integer> answer = new ArrayList<>();
+        Queue<Integer> q = new LinkedList<>();
 
         for (int node = 0; node < vertices; node++) {
-            if (safe[node] == 1) {
-                answer.add(node);
+            if (outdegree[node] == 0) {
+                q.offer(node);
             }
         }
-        return answer;
+
+        ArrayList<Integer> safe = new ArrayList<>();
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            safe.add(node);
+
+            for (int predecessor : reverseGraph.get(node)) {
+                outdegree[predecessor]--;
+                if (outdegree[predecessor] == 0) {
+                    q.offer(predecessor);
+                }
+            }
+        }
+
+        Collections.sort(safe);
+        return safe;
     }
 }
