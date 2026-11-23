@@ -8,17 +8,16 @@ class Solution {
 
         while (left <= right) {
             int mid = (left + right) / 2;
-            int sum = 0;
+            int totalTime = 0;
             for (int pile : piles) {
-                sum += Math.ceil((double) pile / (double) mid);
+                totalTime += Math.ceil((double) pile / (double) mid);
             }
-            if (sum <= h) {
+            if (totalTime <= h) {
                 right = mid - 1;
             } else {
                 left = mid + 1;
             }
         }
         return left;
-
     }
 }
